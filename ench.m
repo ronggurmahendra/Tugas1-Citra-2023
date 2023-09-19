@@ -53,7 +53,7 @@ function greyscale_imagenegative(image)
 
 end
     
-function colour_imagebrightening(image, a, b)
+function colour_imagenegative(image, a, b)
     [rows, cols, channel] = size(image);
     
     for i = 1:rows
