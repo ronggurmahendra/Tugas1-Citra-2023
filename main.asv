@@ -1,0 +1,40 @@
+function grayscale_hist(image)
+    [rows, cols] = size(image);
+    histogram = zeros(1, 256);
+
+    for i = 1:rows
+        for j = 1:cols
+            pixel_value = image(i, j);
+            histogram(pixel_value + 1) = histogram(pixel_value + 1) + 1;
+        end
+    end
+
+    bar(histogram);
+    title('Histogram');
+    xlabel('Value (0-255)');
+    ylabel('Frequency');
+end
+
+function colour_hist(image)
+    [rows, cols, ~] = size(image);
+    R = zeros(1, 256);
+    G = zeros(1, 256);
+    B = zeros(1, 256);
+    
+    for i = 1:rows
+        for j = 1:cols
+            pixel_value = image(i, j, :);
+            R(pixel(1) + 1)  = R(pixel(1) + 1) + 1;
+            G(pixel(2) + 1)  = zeros(1, 256);
+            B(pixel(3) + 1)  = zeros(1, 256);
+        end
+    end
+
+    bar(histogram);
+    title('Histogram');
+    xlabel('Value (0-255)');
+    ylabel('Frequency');
+end
+
+
+image_gray = imread('./data/peppers512warna.bmp');
