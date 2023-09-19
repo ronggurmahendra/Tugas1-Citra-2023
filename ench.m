@@ -5,11 +5,14 @@ function main()
     % image_gray = imread('contoh_grayscale.png'); 
     image_color = imread('sample.png');  
     imshow(image_color);
+
+    randomgreyscaleimage=uint8(255*rand(100,100));
     % figure;
     % grayscale_hist(image_gray);
 
     figure;
-    colour_contraststreching(image_color,0.2,3);
+    % colour_contraststreching(image_color,0.2,3);
+    greyscale_contraststreching(randomgreyscaleimage);
 
 end
 
@@ -125,8 +128,8 @@ end
 
 function greyscale_contraststreching(image)
     [rows, cols] = size(image);
-    minValue = min(image(:))
-    maxValue = max(image(:))
+    [minValue,idxmin] = min(image(:))
+    [maxValue,idxmin] = max(image(:))
     range = maxValue - minValue
     for i = 1:rows
         for j = 1:cols
