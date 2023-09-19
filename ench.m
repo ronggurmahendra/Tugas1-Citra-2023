@@ -146,14 +146,14 @@ function colour_contraststreching(image)
     [rows, cols, channel] = size(image);
 
     for k = 1:channel
-        minValue = min(image(:,1));
-        maxValue = max(image(:,1));
+        minValue = min(image(:,k));
+        maxValue = max(image(:,k));
         range = maxValue - minValue;
         for i = 1:rows
             for j = 1:cols
                 % asumsi 8 bit
                 pixelNorm = (image(i,j,k) - minValue ) / range;
-                image(i,j,1) = pixelNorm * 255 ;
+                image(i,j,k) = pixelNorm * 255 ;
             end 
         end
     end
