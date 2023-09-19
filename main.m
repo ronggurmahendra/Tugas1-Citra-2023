@@ -3,7 +3,7 @@ function main()
     % Load image
     % image_gray = imread('contoh_grayscale.png'); 
     image_color = imread('sample.png');  
-
+    imshow(image_color);
     % figure;
     % grayscale_hist(image_gray);
 
