@@ -4,14 +4,16 @@ function main()
     % Load image
     % image_gray = imread('contoh_grayscale.png'); 
     image_color = imread('sample.png');  
-    imshow(image_color);
 
+    image_grey = rgb2gray(image_color);
+
+    imshow(image_grey);
     randomgreyscaleimage=uint8(255*rand(100,100));
     % figure;
     % grayscale_hist(image_gray);
 
     figure;
-    colour_contraststreching(image_color);
+    greyscale_contraststreching(image_grey);
     % greyscale_contraststreching(randomgreyscaleimage);
 
 end
@@ -26,7 +28,7 @@ function greyscale_imagebrightening(image, a, b)
             image(i,j) = max(min(a*image(i,j) + b, 255),0);
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 
@@ -41,7 +43,7 @@ function colour_imagebrightening(image, a, b)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_imagenegative(image)
@@ -50,10 +52,10 @@ function greyscale_imagenegative(image)
     for i = 1:rows
         for j = 1:cols
             % asumsi 8 bit
-            image(i,j) = 255 - image(i,j)
+            image(i,j) = 255 - image(i,j);
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -64,11 +66,11 @@ function colour_imagenegative(image, a, b)
         for j = 1:cols
             for k = 1:channel
                 % asumsi 8 bit
-                image(i,j,k) = 255 - image(i,j,k)
+                image(i,j,k) = 255 - image(i,j,k);
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
     
@@ -81,7 +83,7 @@ function greyscale_imagelog(image,c,r)
             image(i,j) = max(min(c * log( image(i,j) + r ), 255),0); 
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -96,7 +98,7 @@ function colour_imagelog(image, c,r)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_imagepow(image,c,y)
@@ -108,7 +110,7 @@ function greyscale_imagepow(image,c,y)
             image(i,j) = max(min(c * ( image(i,j) ^ r ), 255),0); 
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -123,44 +125,63 @@ function colour_imagepow(image, c,y)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_contraststreching(image)
     [rows, cols] = size(image);
-    [minValue,idxmin] = min(image(:))
-    [maxValue,idxmin] = max(image(:))
-    range = maxValue - minValue
+    [minValue,idxmin] = min(image(:));
+    [maxValue,idxmax] = max(image(:));
+    range = maxValue - minValue;
     for i = 1:rows
         for j = 1:cols
             % asumsi 8 bit
-            pixelNorm = (image(i,j) - minValue ) / range'
-            image(i,j) = pixelNorm * 255
+            pixelNorm = uint8(image(i,j) - minValue ) / (maxValue - minValue);
+            image(i,j) = pixelNorm * 255;
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
 function colour_contraststreching(image)
+    image = double(image);
     [rows, cols, channel] = size(image);
-    
+    rmin = min(image(:));
+    rmax = max(image(:));
+    stretched_image = uint8((double(image) - rmin) / (rmax - rmin)) * 2;
 
-    minValue = min(image(,,1))
-    maxValue = max(image(,,1))
+    % Tampilkan citra masukan dan histogram
+    subplot(2, 2, 1);
+    imshow(image);
+    title('Citra Masukan');
 
+    subplot(2, 2, 2);
+    imhist(image);
+    title('Histogram Citra Masukan');
 
-    range = maxValue - minValue
-    for k = 1:0
-        for i = 1:rows
-            for j = 1:cols
-                % asumsi 8 bit
-                pixelNorm = (image(i,j,1) - minValue ) / range;
-                image(i,j,1) = pixelNorm * 255 ;
-            end 
-        end
-    end
-    imshow(image)
+    % Tampilkan citra keluaran dan histogram
+    subplot(2, 2, 3);
+    imshow(stretched_image);
+    title(['Citra Keluaran (rmin = ' num2str(rmin) ', rmax = ' num2str(rmax) ')']);
+
+    subplot(2, 2, 4);
+    imhist(stretched_image);
+    title('Histogram Citra Keluaran');
+
+    % for k = 1:channel
+    %     minValue = min(image(:,k));
+    %     maxValue = max(image(:,k));
+    %     range = maxValue - minValue;
+    %     for i = 1:rows
+    %         for j = 1:cols
+    %             % asumsi 8 bit
+    %             pixelNorm = double( double(image(i,j,k) - minValue ) / range);
+    %             image(i,j,k) = pixelNorm * 255 ;
+    %         end 
+    %     end
+    % end
+    % imshow(image);
 end
 
     

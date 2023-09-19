@@ -4,16 +4,19 @@ function main()
     % Load image
     % image_gray = imread('contoh_grayscale.png'); 
     image_color = imread('sample.png');  
-    imshow(image_color);
 
-    randomgreyscaleimage=uint8(255*rand(100,100));
-    % figure;
+    image_grey = rgb2gray(image_color);
+    imshow(image_color);
+    figure;
+    imshow(image_grey);
+    figure;
+    colour_contraststreching(image_color);
+
     % grayscale_hist(image_gray);
 
     figure;
-    colour_contraststreching(image_color);
-    % greyscale_contraststreching(randomgreyscaleimage);
-
+    greyscale_contraststreching(image_grey);
+    
 end
 
 
@@ -26,7 +29,7 @@ function greyscale_imagebrightening(image, a, b)
             image(i,j) = max(min(a*image(i,j) + b, 255),0);
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 
@@ -41,7 +44,7 @@ function colour_imagebrightening(image, a, b)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_imagenegative(image)
@@ -50,10 +53,10 @@ function greyscale_imagenegative(image)
     for i = 1:rows
         for j = 1:cols
             % asumsi 8 bit
-            image(i,j) = 255 - image(i,j)
+            image(i,j) = 255 - image(i,j);
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -64,11 +67,11 @@ function colour_imagenegative(image, a, b)
         for j = 1:cols
             for k = 1:channel
                 % asumsi 8 bit
-                image(i,j,k) = 255 - image(i,j,k)
+                image(i,j,k) = 255 - image(i,j,k);
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
     
@@ -81,7 +84,7 @@ function greyscale_imagelog(image,c,r)
             image(i,j) = max(min(c * log( image(i,j) + r ), 255),0); 
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -96,7 +99,7 @@ function colour_imagelog(image, c,r)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_imagepow(image,c,y)
@@ -108,7 +111,7 @@ function greyscale_imagepow(image,c,y)
             image(i,j) = max(min(c * ( image(i,j) ^ r ), 255),0); 
         end
     end
-    imshow(image)
+    imshow(image);
 
 end
     
@@ -123,41 +126,65 @@ function colour_imagepow(image, c,y)
             end
         end
     end
-    imshow(image)
+    imshow(image);
 end
 
 function greyscale_contraststreching(image)
-    [rows, cols] = size(image);
-    [minValue,idxmin] = min(image(:));
-    [maxValue,idxmin] = max(image(:));
-    range = maxValue - minValue
-    for i = 1:rows
-        for j = 1:cols
-            % asumsi 8 bit
-            pixelNorm = (image(i,j) - minValue ) / range;
-            image(i,j) = pixelNorm * 255;
-        end
-    end
-    imshow(image)
+    outputMin = 0;
+    outputMax = 255;
+
+    minValue = min(image(:));
+    maxValue = max(image(:));
+    % range = maxValue - minValue;
+    % for i = 1:rows
+    %     for j = 1:cols
+    %         % asumsi 8 bit
+    %         pixelNorm = uint8(image(i,j) - minValue ) / (maxValue - minValue);
+    %         image(i,j) = pixelNorm * 255;
+    %     end
+    % end
+
+    outputImage = (image - minValue) / (maxValue - minValue) * (outputMax );
+    outputImage = uint8(outputImage);
+
+    imshow(outputImage);
 
 end
     
 function colour_contraststreching(image)
-    [rows, cols, channel] = size(image);
+    % image = double(image);
+    % [rows, cols, channel] = size(image);
+    % rmin = min(image(:));
+    % rmax = max(image(:));
+    % stretched_image = uint8((double(image) - rmin) / (rmax - rmin)) * 255;
+    outputMin = 0;
+    outputMax = 255;
 
-    for k = 1:channel
-        minValue = min(image(:,k));
-        maxValue = max(image(:,k));
-        range = maxValue - minValue;
-        for i = 1:rows
-            for j = 1:cols
-                % asumsi 8 bit
-                pixelNorm = (image(i,j,k) - minValue ) / range;
-                image(i,j,k) = pixelNorm * 255 ;
-            end 
-        end
-    end
-    imshow(image)
+    R = double(image(:, :, 1));
+    G = double(image(:, :, 2));  
+    B = double(image(:, :, 3));
+    
+
+    R_stretched = (double(R) - min(R(:))) / (max(R(:)) - min(R(:))) * (outputMax - outputMin) + outputMin;
+    G_stretched = (double(G) - min(G(:))) / (max(G(:)) - min(G(:))) * (outputMax - outputMin) + outputMin;
+    B_stretched = (double(B) - min(B(:))) / (max(B(:)) - min(B(:))) * (outputMax - outputMin) + outputMin;
+
+    outputImage = cat(3, uint8(R_stretched), uint8(G_stretched), uint8(B_stretched));
+
+    imshow(outputImage);
+    % for k = 1:channel
+    %     minValue = min(image(:,k));
+    %     maxValue = max(image(:,k));
+    %     range = maxValue - minValue;
+    %     for i = 1:rows
+    %         for j = 1:cols
+    %             % asumsi 8 bit
+    %             pixelNorm = double( double(image(i,j,k) - minValue ) / range);
+    %             image(i,j,k) = pixelNorm * 255 ;
+    %         end 
+    %     end
+    % end
+    % imshow(image);
 end
 
     
