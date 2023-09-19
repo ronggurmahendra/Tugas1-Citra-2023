@@ -8,8 +8,9 @@ function main()
     % figure;
     % grayscale_hist(image_gray);
 
-    % figure;
-    colour_imagelog(image_color,2,3);
+    figure;
+    colour_contraststreching(image_color,0.2,3);
+
 end
 
 
@@ -122,7 +123,7 @@ function colour_imagepow(image, c,y)
     imshow(image)
 end
 
-function greyscale_contraststreching(image,c,y)
+function greyscale_contraststreching(image)
     [rows, cols] = size(image);
     minValue = min(image(:))
     maxValue = max(image(:))
@@ -138,7 +139,7 @@ function greyscale_contraststreching(image,c,y)
 
 end
     
-function colour_contraststreching(image, c,y)
+function colour_contraststreching(image)
     [rows, cols, channel] = size(image);
     
     for k = 1:channel
