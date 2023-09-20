@@ -92,7 +92,6 @@ function testImagePow()
     greyscale_imagePow(image_grey,2,2);
 end
 
-% asumsi 8 bit
 function imageoutput = greyscale_imagebrightening(image, a, b)
     [rows, cols] = size(image);
     
@@ -101,10 +100,7 @@ function imageoutput = greyscale_imagebrightening(image, a, b)
             imageoutput(i,j) = max(min(a*image(i,j) + b, 255),0);
         end
     end
-    % imshow(imageoutput);
 end
-
-
 
 function imageoutput = colour_imagebrightening(image, a, b)
     [rows, cols, channel] = size(image);
@@ -116,7 +112,6 @@ function imageoutput = colour_imagebrightening(image, a, b)
             end
         end
     end
-    % imshow(imageoutput);
 end
 
 function imageoutput = greyscale_imagenegative(image)
@@ -124,12 +119,9 @@ function imageoutput = greyscale_imagenegative(image)
     
     for i = 1:rows
         for j = 1:cols
-            % asumsi 8 bit
             imageoutput(i,j) = 255 - image(i,j);
         end
     end
-    % imshow(imageoutput);
-
 end
     
 function imageoutput = colour_imagenegative(image)
@@ -138,12 +130,10 @@ function imageoutput = colour_imagenegative(image)
     for i = 1:rows
         for j = 1:cols
             for k = 1:channel
-                % asumsi 8 bit
                 imageoutput(i,j,k) = 255 - image(i,j,k);
             end
         end
     end
-    % imshow(imageoutput);
 end
 
     
@@ -152,12 +142,9 @@ function imageoutput = greyscale_imagelog(image,c,r)
     
     for i = 1:rows
         for j = 1:cols
-            % asumsi 8 bit
             imageoutput(i,j) = max(min(c * log( double(image(i,j)) + r ), 255),0); 
         end
     end
-    % imshow(imageoutput);
-
 end
     
 function imageoutput = colour_imagelog(image, c,r)
@@ -166,12 +153,10 @@ function imageoutput = colour_imagelog(image, c,r)
     for i = 1:rows
         for j = 1:cols
             for k = 1:channel
-                % asumsi 8 bit
                 imageoutput(i,j,k) = max(min(c * log( double(image(i,j,k)) + r ), 255),0); 
             end
         end
     end
-    % imshow(imageoutput);
 end
 
 function imageoutput = greyscale_imagePow(image,c,y)
@@ -179,12 +164,9 @@ function imageoutput = greyscale_imagePow(image,c,y)
     
     for i = 1:rows
         for j = 1:cols
-            % asumsi 8 bit
             imageoutput(i,j) = max(min(c * ( image(i,j) ^ y ), 255),0); 
         end
     end
-    % imshow(imageoutput);
-
 end
     
 function imageoutput = colour_imagePow(image, c,y)
@@ -193,12 +175,10 @@ function imageoutput = colour_imagePow(image, c,y)
     for i = 1:rows
         for j = 1:cols
             for k = 1:channel
-                % asumsi 8 bit
                 imageoutput(i,j,k) = max(min(c * ( image(i,j,k) ^ y ), 255),0); 
             end
         end
     end
-    % imshow(imageoutput);
 end
 
 function outputImage = greyscale_contraststreching(image)

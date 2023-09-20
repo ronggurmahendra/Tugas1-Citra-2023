@@ -142,7 +142,6 @@ function histogram = grayscale_hist(image)
             histogram(pixel_value + 1) = histogram(pixel_value + 1) + 1;
         end
     end
-
 end
 
 function [R, G, B] = colour_hist(image)
@@ -153,31 +152,12 @@ function [R, G, B] = colour_hist(image)
     
     for i = 1:rows
         for j = 1:cols
-            pixel_value = max(min(image(i, j, :), 255), 0);
+            pixel_value = image(i, j, :);
             R(uint8(pixel_value(1)) + 1)  = R(uint8(pixel_value(1)) + 1) + 1;
             G(uint8(pixel_value(2)) + 1)  = G(uint8(pixel_value(2)) + 1) + 1;
             B(uint8(pixel_value(3)) + 1)  = B(uint8(pixel_value(3)) + 1) + 1;
         end
     end
-
-    % figure;
-    % subplot(3, 1, 1);
-    % bar(R, 'r');
-    % title('Histogram Red');
-    % xlabel('Intensity (0-255)');
-    % ylabel('Frequency');
-
-    % subplot(3, 1, 2);
-    % bar(G, 'g');
-    % title('Histogram Green');
-    % xlabel('Intensity (0-255)');
-    % ylabel('Frequency');
-
-    % subplot(3, 1, 3);
-    % bar(B, 'b');
-    % title('Histogram Blue');
-    % xlabel('Intensity (0-255)');
-    % ylabel('Frequency');
 end
 
 function outputImage = colour_histEq(image)
