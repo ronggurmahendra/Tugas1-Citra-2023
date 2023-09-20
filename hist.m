@@ -1,7 +1,10 @@
 
 function main()
-    testHist()
-    % testHisteq()
+    clc;
+    close all;
+    clear all;
+    % testHist()
+    testHisteq()
 end
 
 function testHist()
@@ -10,17 +13,17 @@ function testHist()
     image_color = imread('sample.png');  
     figure;
     imshow(image_color);    
-    image_grey = rgb2gray(image_color);
+    image_gray = rgb2gray(image_color);
     figure;
-    imshow(image_grey);
+    imshow(image_gray);
 
-    % Greyscale hist
+    % grayscale hist
     figure;
-    grayscale_hist(image_grey);
-    % Greyscale hist
+    grayscale_hist(image_gray);
+    % grayscale hist
     
-    figure;
-    colour_hist(image_color);
+    % figure;
+    % colour_hist(image_color);
 end
 
 function testHisteq()
@@ -29,18 +32,18 @@ function testHisteq()
     image_color = imread('sample.png');  
     figure;
     imshow(image_color);    
-    image_grey = rgb2gray(image_color);
+    image_gray = rgb2gray(image_color);
     figure;
-    imshow(image_grey);
+    imshow(image_gray);
 
-    % Greyscale hist
+    % grayscale hist
     figure;
-    grayscale_histeq(image_grey);
-    % Greyscale hist
+    grayscale_histEq(image_gray);
+    % grayscale hist
     
     figure;
-    colour_histeq(image_color);
-    
+    colour_histEq(image_color);
+end    
 
 function histogram = grayscale_hist(image)
     [rows, cols] = size(image);
@@ -96,9 +99,103 @@ end
 
 function outputImage = colour_histEq(image)
 
+
+    outputImage = image
 end
 
 
-function outputImage = greyscale_histEq(image)
+function outputImage = grayscale_histEq(Image)
+    
+    hist = zeros(1,256);  
+    
+    % traversing the array of an image.
+    [rows cols] = size(Image);    
+    no_of_pixels = rows*cols;
+    n = 0 : 255;
+    
+    % loop for travers 
+    for i= 1:rows      
+        for j=1:cols
+            hist(Image(i,j)+1) = hist(Image(i,j)+1)+1;
+        end 
+    end 
+    
+    % Calculating Probability
+    for i=1:256
+        hist(i)=hist(i)/no_of_pixels;
+    end
+    
+    % Calculating Cumulative Probability
+    temp=hist(1);
+    for i=2:256
+        temp=temp+hist(i);
+        hist(i)=temp;
+    end
 
+    for i = 1:rows 
+        for j = 1:cols
+            outputImage(i,j) = hist(Image(i,j)+1);
+        end
+    end
+    figure;
+    imshow(outputImage);
+    % =================================
+
+    % [rows, cols] = size(image);
+    % hist = zeros(1, 256);
+    % hist = grayscale_hist(image)
+
+    % histEq = zeros(1, 256);
+    
+    % for i = 1:256
+    %     sum = 0
+    %     for j = 1:i
+    %         sum = sum + hist(j);
+    %     end
+    %     histEq(i) = floor(255*sum);
+        
+    % end
+
+    % for i = 1:rows
+    %     for j = 1:cols
+    %         outputImage(i,j) = max(min(histEq(max(min(image(i,j)+1,255), 0)), 255), 0);
+    %     end
+    % end
+
+    % figure;
+    % imshow(outputImage);
+    % figure;
+    % grayscale_hist(outputImage)
+
+
+    % =================================
+    % [rows, cols] = size(image);
+    % hist = zeros(1, 256);
+    % hist = grayscale_hist(image)
+
+    % for i = 1:rows
+    %     for j = 1:cols
+    %         intensity = double(image(i, j)) + 1; % MATLAB indexing starts from 1
+    %         hist(intensity) = hist(intensity) + 1;
+    %     end
+    % end
+
+    
+    % histEq = zeros(1, 256); % histogram hasil perataan
+    % % Hitung histogram kumulatif
+    % sum = 0;
+    % for i = 1:256
+    %     sum = sum + hist(i);
+    %     histEq(i) = floor(255 * sum / (rows * cols));
+    % end
+    %  % Update citra sesuai histogram hasil perataan
+    % for i = 1:rows
+    %     for j = 1:cols
+    %         outputImage(i, j) = histEq(double(image(i, j))); % MATLAB indexing starts from 1
+    %     end
+    % end
+    % figure;
+    % imshow(outputImage);
+    % figure;
+    % grayscale_hist(outputImage)
 end
