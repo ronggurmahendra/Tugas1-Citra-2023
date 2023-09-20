@@ -1,4 +1,11 @@
 function main()
+    
+    testContrastStreching()
+
+end
+
+function testContrastStreching()
+    % contrast streching
     % Load image
     image_color = imread('sample.png');  
     image_grey = rgb2gray(image_color);
@@ -8,14 +15,10 @@ function main()
     imshow(image_grey);
     figure;
     colour_contraststreching(image_color);
-
-    % grayscale_hist(image_gray);
-
     figure;
     greyscale_contraststreching(image_grey);
-    
-end
 
+end
 
 % asumsi 8 bit
 function greyscale_imagebrightening(image, a, b)
@@ -126,34 +129,20 @@ function colour_imagepow(image, c,y)
     imshow(image);
 end
 
-function greyscale_contraststreching(image)
+function outputImage = greyscale_contraststreching(image)
     outputMin = 0;
     outputMax = 255;
 
     minValue = min(image(:));
     maxValue = max(image(:));
-    % range = maxValue - minValue;
-    % for i = 1:rows
-    %     for j = 1:cols
-    %         % asumsi 8 bit
-    %         pixelNorm = uint8(image(i,j) - minValue ) / (maxValue - minValue);
-    %         image(i,j) = pixelNorm * 255;
-    %     end
-    % end
-
-    outputImage = (image - minValue) / (maxValue - minValue) * (outputMax );
+    outputImage = (double(image) - min(double(image(:)))) / (max(double(image(:))) - min(double(image(:)))) * (outputMax - outputMin) + outputMin;
     outputImage = uint8(outputImage);
 
     imshow(outputImage);
 
 end
     
-function colour_contraststreching(image)
-    % image = double(image);
-    % [rows, cols, channel] = size(image);
-    % rmin = min(image(:));
-    % rmax = max(image(:));
-    % stretched_image = uint8((double(image) - rmin) / (rmax - rmin)) * 255;
+function outputImage = colour_contraststreching(image)
     outputMin = 0;
     outputMax = 255;
 
@@ -169,19 +158,6 @@ function colour_contraststreching(image)
     outputImage = cat(3, uint8(R_stretched), uint8(G_stretched), uint8(B_stretched));
 
     imshow(outputImage);
-    % for k = 1:channel
-    %     minValue = min(image(:,k));
-    %     maxValue = max(image(:,k));
-    %     range = maxValue - minValue;
-    %     for i = 1:rows
-    %         for j = 1:cols
-    %             % asumsi 8 bit
-    %             pixelNorm = double( double(image(i,j,k) - minValue ) / range);
-    %             image(i,j,k) = pixelNorm * 255 ;
-    %         end 
-    %     end
-    % end
-    % imshow(image);
 end
 
     
