@@ -1,11 +1,8 @@
-
-
 function main()
     % Load image
-    % image_gray = imread('contoh_grayscale.png'); 
     image_color = imread('sample.png');  
-
     image_grey = rgb2gray(image_color);
+    
     imshow(image_color);
     figure;
     imshow(image_grey);

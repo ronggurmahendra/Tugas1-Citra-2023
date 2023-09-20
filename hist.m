@@ -1,23 +1,25 @@
 
 function main()
     % Load image
-    % image_gray = imread('contoh_grayscale.png'); 
+ 
     image_color = imread('sample.png');  
     figure;
-    imshow(image_color);
-    
+    imshow(image_color);    
     image_grey = rgb2gray(image_color);
     figure;
     imshow(image_grey);
-    figure;
-    grayscale_hist(image_gray);
 
+    % Greyscale hist
+    figure;
+    grayscale_hist(image_grey);
+    % Greyscale hist
+    
     figure;
     colour_hist(image_color);
 end
 
 
-function grayscale_hist(image)
+function histogram = grayscale_hist(image)
     [rows, cols] = size(image);
     histogram = zeros(1, 256);
 
@@ -34,7 +36,7 @@ function grayscale_hist(image)
     ylabel('Frequency');
 end
 
-function colour_hist(image)
+function [R, G, B] = colour_hist(image)
     [rows, cols, ~] = size(image);
     R = zeros(1, 256);
     G = zeros(1, 256);
