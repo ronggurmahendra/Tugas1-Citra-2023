@@ -1,7 +1,12 @@
 
 function main()
+    testHist()
+    % testHisteq()
+end
+
+function testHist()
     % Load image
- 
+
     image_color = imread('sample.png');  
     figure;
     imshow(image_color);    
@@ -18,6 +23,24 @@ function main()
     colour_hist(image_color);
 end
 
+function testHisteq()
+    % Load image
+
+    image_color = imread('sample.png');  
+    figure;
+    imshow(image_color);    
+    image_grey = rgb2gray(image_color);
+    figure;
+    imshow(image_grey);
+
+    % Greyscale hist
+    figure;
+    grayscale_histeq(image_grey);
+    % Greyscale hist
+    
+    figure;
+    colour_histeq(image_color);
+    
 
 function histogram = grayscale_hist(image)
     [rows, cols] = size(image);
@@ -71,3 +94,11 @@ function [R, G, B] = colour_hist(image)
     ylabel('Frequency');
 end
 
+function outputImage = colour_histEq(image)
+
+end
+
+
+function outputImage = greyscale_histEq(image)
+
+end
