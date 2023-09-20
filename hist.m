@@ -108,24 +108,20 @@ function outputImage = grayscale_histEq(Image)
     
     hist = zeros(1,256);  
     
-    % traversing the array of an image.
     [rows cols] = size(Image);    
     no_of_pixels = rows*cols;
     n = 0 : 255;
     
-    % loop for travers 
     for i= 1:rows      
         for j=1:cols
             hist(Image(i,j)+1) = hist(Image(i,j)+1)+1;
         end 
     end 
     
-    % Calculating Probability
     for i=1:256
         hist(i)=hist(i)/no_of_pixels;
     end
     
-    % Calculating Cumulative Probability
     temp=hist(1);
     for i=2:256
         temp=temp+hist(i);
